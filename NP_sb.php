@@ -47,7 +47,7 @@ class NP_sb extends NucleusPlugin
 		if (! @include_once($langDir . $language . '.php')) {include_once($langDir . 'english.php');}
 	}
 	
-	function doSkinVar()
+	function doSkinVar($skinType)
 	{
 		global $CONF;
 		$args = func_get_args();
@@ -71,7 +71,7 @@ class NP_sb extends NucleusPlugin
 		echo $output;
 	}
 	
-	function doTemplateVar()
+	function doTemplateVar(&$item)
 	{
 		$args = func_get_args();
 		$item = array_shift($args);
