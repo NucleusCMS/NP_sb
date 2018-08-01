@@ -5,12 +5,14 @@ class NP_sb extends NucleusPlugin
 	function getName()              {return 'NP_sb';}
 	function getAuthor()            {return 'yamamoto';}
 	function getURL()               {return 'http://kyms.ne.jp/';}
-	function getVersion()           {return '0.1';}
+	function getVersion()           {return '0.2';}
 	function getMinNucleusVersion() {return 330;}
 	function supportsFeature($w)    {return ($w == 'SqlTablePrefix') ? 1 : 0;}
 	function getEventList()         {return array('PreItem');}
 	function getDescription()       {return 'Facebook, Twitter, mixi';}
 
+	public $linkparams;
+	
 	function install()
 	{
 	/*
@@ -86,7 +88,11 @@ class NP_sb extends NucleusPlugin
 		$params_array = explode(';', $param_str);
 		foreach($params_array as $t)
 		{
-			list($k,$v) = explode(':', $t);
+			if(strpos($t,':')!==false) list($k,$v) = explode(':', $t);
+			else {
+				$k = $t;
+				$v = '';
+			}
 			$k = trim($k);
 			$v = trim($v);
 			$param[$k] = $v;
@@ -98,7 +104,7 @@ class NP_sb extends NucleusPlugin
 	{
 		$service = $args[0];
 		$params  = '';
-		if($args[1])
+		if(isset($args[1]) && $args[1])
 		{
 			array_shift($args);
 			$params = ',{' . join(',',$args) . '}';
